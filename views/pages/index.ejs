@@ -1,0 +1,42 @@
+<%- include("../partials/_header") %>
+
+    <h2>Products</h2>
+    <%if(products.length> 0){%>
+        <div class="row">
+            <% products.forEach(product=> { %>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="card" style="height: 100%;">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <a href="/products/<%= product.id %>">
+                                    <img src="<%= product.image %>" alt="Product Image" class="img-fluid" style="height: 200px; object-fit: cover;">
+                                </a>
+                            </div>
+                        <hr class="mb-0">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <strong class="fs-4 m-0 p-0">
+                                <%= product.name %>
+                            </strong>
+                            <div>
+                                <%= product.price %> PKR
+                            </div>
+                        </div>
+                        <%if(user){%>
+                        <div>
+                            <form action="/users/<%= user.id %>/cart/add" method="post">
+                                <input type="hidden" name="product_id" value="<%= product.id %>">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            </form>                        
+                        </div>
+                        <%}%>
+                    </div>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+        <%}else{%>
+            <p>no products found</p>
+        <%}%>
+
+<%- include("../partials/_footer") %>

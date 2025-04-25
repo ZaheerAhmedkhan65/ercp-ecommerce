@@ -1,0 +1,131 @@
+<%- include("partials/_header") %>
+    <div class="d-flex align-items-center justify-content-between">
+        <h3>Products</h3>
+    
+        <div class="d-flex gap-3">
+            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newProductModel"
+            data-bs-whatever="@mdo">new product</button>
+            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newCategoryModel"
+            data-bs-whatever="@mdo">new category</button>
+        </div>
+    </div>
+    
+    
+    <div class="modal fade" id="newProductModel" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="productModalLabel">New Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/products/create" method="post" enctype="multipart/form-data">
+                        <div class="d-flex align-items-center justify-content-center gap-3">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="name" class="col-form-label fw-bold">Product name</label>
+                                <input type="text" name="name" id="name" placeholder="Enter product name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="col-form-label fw-bold">Product price</label>
+                                <input type="number" name="price" id="price" placeholder="Enter product price" class="form-control"
+                                    required>
+                            </div>
+                            <div class="form-group mt-3">
+                                <select  name="category_id" id="category_id" class="form-control " required>
+                                    <option value="">Select product category</option>
+                                    <%categories.forEach(category=> {%>
+                                        <option value="<%=category.id%>">
+                                            <%=category.name%>
+                                        </option>
+                                        <%})%>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="description" class="col-form-label fw-bold">Product description</label>
+                                <textarea type="text" name="description" id="description" placeholder="Enter product description"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 w-50">
+                            <h3>Image Preview</h3>
+                            <button id="uploaded-image-preview" 
+                            style="width: 200px; height: 200px; background-size: cover; background-position: center; border: 1px solid #ccc;"></button>
+                            <div class="form-group">
+                                <button type="button" id="img-upload-button" class="btn px-0">
+                                    <i class="bi bi-plus-circle"></i>
+                                </button>
+                                <label for="image" class="col-form-label fw-bold p-0">upload image</label>
+                                <input type="file" name="image" id="image" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+
+                    </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                            <div class="form-group">
+                                <input type="submit" value="create" class="btn btn-primary btn-sm">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="newCategoryModel" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="categoryModalLabel">New Category</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/products/category/create" method="post">
+                        <div class="form-group mb-3">
+                            <label for="name" class="col-form-label">Category name</label>
+                            <input type="text" name="name" id="name" placeholder="Enter category name" class="form-control">
+                        </div>
+    
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                            <div class="form-group">
+                                <input type="submit" value="create" class="btn btn-primary btn-sm">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imgUploadButton = document.getElementById('img-upload-button');
+            const imageInput = document.getElementById('image');
+            const uploadedImagePreview = document.getElementById('uploaded-image-preview');
+
+            // Trigger file input when button is clicked
+            imgUploadButton.addEventListener('click', function () {
+                imageInput.click();
+            });
+
+            // Preview image when selected
+            imageInput.addEventListener('change', function () {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        uploadedImagePreview.style.backgroundImage = `url(${e.target.result})`;
+                    }
+
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+    </script>
+
+
+    <%- include("partials/_footer") %>

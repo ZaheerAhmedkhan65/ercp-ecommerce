@@ -4,7 +4,6 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const multer = require('multer');
-const db = require("./config/db");
 const jwt = require('jsonwebtoken');
 
 // Middleware
@@ -51,6 +50,6 @@ app.get('/', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT||3000, () => {
     console.log(`Server running on port ${PORT}`);
 });

@@ -8,7 +8,7 @@ const authenticate = require("../middleware/authenticate");
 router.get("/:id",async (req,res)=>{
     try{
         const product = await Product.getProductById(req.params.id);
-        res.render("pages/view_product",{product,title:product.name,user:req.user});
+        res.json({product,title:product.name,user:req.user});
     } catch(err){
         console.log(err);
     }

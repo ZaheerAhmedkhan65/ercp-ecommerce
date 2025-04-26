@@ -44,7 +44,7 @@ app.get('/', async (req, res) => {
                 console.log("user: ",user)
             });
         }
-        res.render('pages/index', { products,title:"home",user });
+        res.json({ products,title:"home",user });
     } catch (err) {
         console.error(err);
         res.status(500).send('Server Error');

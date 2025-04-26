@@ -13,7 +13,7 @@ router.get("/:user_id/carts", authenticate, async (req, res) => {
         const carts = await Cart.getCartByUserId(user_id);
         if (!carts) return res.status(404).json({ message: "Cart not found" });
          console.log("carts: ",carts)
-        res.status(200).render("pages/user_carts", { carts, title: "Cart", user: req.user });
+        res.status(200).json({ carts, title: "Cart", user: req.user });
     } catch (err) {
         console.error(err);
         res.status(500).send("Server error");
@@ -57,7 +57,7 @@ router.get("/:user_id/cart/:cart_id", authenticate, async (req, res) => {
 
         console.log("cartItems with products:", products);
 
-        res.status(200).render("pages/cart", { 
+        res.status(200).json({ 
             cart, 
             title: "Cart", 
             user: req.user, 

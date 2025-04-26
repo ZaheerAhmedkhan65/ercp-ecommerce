@@ -8,21 +8,21 @@ const upload = require('../middleware/upload');
 
 
 router.get("/dashboard",authenticate,authAdmin,(req,res)=>{
-    res.render("admin/index",{title:"dashboard",user:req.user});
+    res.json({title:"dashboard",user:req.user});
 });
 
 router.get("/products",authenticate,authAdmin, async (req,res)=>{
     try{
         const categories = await Category.getAllCategories();
         console.log(categories);
-        res.render("admin/products",{title:"Products",user:req.user,categories});
+        res.json({title:"Products",user:req.user,categories});
     } catch(err){
         console.log(err);
     }
 });
 
 router.get("/orders",authenticate,authAdmin,(req,res)=>{
-    res.render("admin/orders",{title:"Orders",user:req.user});
+    res.json({title:"Orders",user:req.user});
 });
 
 router.post("/products/create",upload.single('image'),authenticate,authAdmin, async (req,res)=>{

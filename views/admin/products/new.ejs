@@ -1,0 +1,76 @@
+
+<%- include('../partials/_header') %>
+                  <div class="row ">
+                        <div class="col-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Add New Product</h4>
+                                    <div class="template-demo">
+                                        <form action="/products/create" method="POST" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label for="name">Product Name</label>
+                                                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="description">Description</label>
+                                                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter product description"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="price">Price</label>
+                                                        <input type="number" class="form-control" id="price" name="price" placeholder="Enter product price">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="category">Category</label>
+                                                        <select class="form-control" id="category" name="category_id">
+                                                              <option value="">Select a category</option>
+                                                            <% categories.forEach(category => { %>
+                                                                <option value="<%= category.id %>"><%= category.name %></option>
+                                                            <% }); %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label for="image">Image</label>
+                                                        <div id="upload-area" style="width: 200px; height: 200px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 10px; background-size: cover; background-position: center;">
+                                                          <span id="plus-icon" style="font-size: 3rem; color: #888;">+</span>
+                                                        </div>
+                                                        <input type="file" id="image" name="image" accept="image/*" style="display: none;">
+                                                      </div>
+                                                </div>
+                                            </div>
+                                           
+                                                                         
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        const uploadArea = document.getElementById('upload-area');
+                        const fileInput = document.getElementById('image');
+                        const plusIcon = document.getElementById('plus-icon');
+                      
+                        uploadArea.addEventListener('click', () => {
+                          fileInput.click();
+                        });
+                      
+                        fileInput.addEventListener('change', (event) => {
+                          const file = event.target.files[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                              uploadArea.style.backgroundImage = `url('${e.target.result}')`;
+                              plusIcon.style.display = 'none';
+                            }
+                            reader.readAsDataURL(file);
+                          }
+                        });
+                      </script>
+                      
+                    
+<%- include('../partials/_footer') %>

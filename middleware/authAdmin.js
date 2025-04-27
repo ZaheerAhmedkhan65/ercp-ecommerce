@@ -6,7 +6,7 @@ function authAdmin(req, res, next) {
         return res.status(401).redirect('/auth/signin');
     }
     if (user.role !== "admin") {
-        return res.status(401).redirect('/auth/signin');
+        return res.status(401).redirect('/');
     }
     next();
 }

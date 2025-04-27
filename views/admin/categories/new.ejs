@@ -1,0 +1,23 @@
+
+<%- include('../partials/_header') %>
+                  <div class="row ">
+                        <div class="col-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Add New Category</h4>
+                                    <div class="template-demo">
+                                        <form action="/categories/create" method="POST" >
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter category name">
+                                            </div>                                             
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      
+                    
+<%- include('../partials/_footer') %>

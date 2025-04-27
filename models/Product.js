@@ -18,6 +18,15 @@ class Product {
         return rows;
     }
 
+
+    static async getProductsByCategory(categoryId) {
+        const [rows] = await db.query(
+            'SELECT * FROM products WHERE category_id = ?',
+            [categoryId]
+        );
+        return rows;
+    }
+
     // Get a single product by ID
     static async getProductById(id) {
         const [rows] = await db.query('SELECT * FROM products WHERE id = ?', [id]);

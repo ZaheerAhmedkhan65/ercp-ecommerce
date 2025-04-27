@@ -4,46 +4,25 @@ const authenticate = require("../middleware/authenticate")
 const authAdmin = require("../middleware/authAdmin");
 const Product = require("../models/Product");
 const Category = require('../models/Category');
-const upload = require('../middleware/upload');
 
 
 router.get("/dashboard",authenticate,authAdmin,(req,res)=>{
-    res.json({title:"dashboard",user:req.user});
+    res.render("admin/index",{title:"dashboard",user:req.user});
 });
 
-router.get("/products",authenticate,authAdmin, async (req,res)=>{
+router.get("/dashboard/products",authenticate,authAdmin, async (req,res)=>{
     try{
-        const categories = await Category.getAllCategories();
-        console.log(categories);
-        res.json({title:"Products",user:req.user,categories});
+        const products = await Product.getAllProducts();
+        res.render("admin/products/index",{title:"Products",user:req.user,products});
     } catch(err){
         console.log(err);
     }
 });
 
+
+
 router.get("/orders",authenticate,authAdmin,(req,res)=>{
     res.json({title:"Orders",user:req.user});
-});
-
-router.post("/products/create",upload.single('image'),authenticate,authAdmin, async (req,res)=>{
-    try{
-        const {name,description,price,category_id} = req.body;
-
-        const imagePath = req.file ? '/uploads/' + req.file.filename : null;
-
-        console.log('Storing image path:', imagePath); // Add this
-
-        Product.createProduct(name,description,price,category_id,imagePath);
-        res.redirect("/admin/products");
-    }catch(err){
-        console.log(err);
-    }
-});
-
-router.post("/products/category/create",authenticate,authAdmin,(req,res)=>{
-    const {name} = req.body;
-    Category.createCategory(name);
-    res.redirect("/admin/products");
 });
 
 module.exports = router;

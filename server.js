@@ -13,6 +13,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));

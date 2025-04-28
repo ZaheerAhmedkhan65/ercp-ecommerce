@@ -4,25 +4,13 @@ const authenticate = require("../middleware/authenticate")
 const authAdmin = require("../middleware/authAdmin");
 const Product = require("../models/Product");
 const Category = require('../models/Category');
+const adminController = require("../controllers/adminController");
 
 
-router.get("/dashboard",authenticate,authAdmin,(req,res)=>{
-    res.render("admin/index",{title:"dashboard",user:req.user});
-});
+router.get("/dashboard",authenticate,authAdmin,adminController.showDashboard);
 
-router.get("/dashboard/products",authenticate,authAdmin, async (req,res)=>{
-    try{
-        const products = await Product.getAllProducts();
-        res.render("admin/products/index",{title:"Products",user:req.user,products});
-    } catch(err){
-        console.log(err);
-    }
-});
+router.get("/dashboard/products",authenticate,authAdmin,adminController.showProducts);
 
-
-
-router.get("/orders",authenticate,authAdmin,(req,res)=>{
-    res.json({title:"Orders",user:req.user});
-});
+router.get("/orders",authenticate,authAdmin,adminController.showOrders)
 
 module.exports = router;

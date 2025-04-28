@@ -1,10 +1,279 @@
 <%- include("../partials/_header") %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1>Home</h1>
-        </div>
+<!-- Hero Carousel -->
+<div id="heroCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <% for(let i=0; i<featuredSlides.length; i++) { %>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="<%= i %>" class="<%= i===0 ? 'active' : '' %>"></button>
+      <% } %>
     </div>
+    <div class="carousel-inner rounded-3">
+      <% featuredSlides.forEach((slide, index) => { %>
+        <div class="carousel-item <%= index===0 ? 'active' : '' %>">
+          <img src="<%= slide.image %>" class="d-block w-100" alt="<%= slide.title %>">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-4 rounded">
+            <h5><%= slide.name %></h5>
+            <p><%= slide.description %></p>
+            <a href="<%= slide.link %>" class="btn btn-primary">Shop Now</a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
 </div>
+
+<div class="container">
+  <!-- Category Filters -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2 class="mb-4">Shop by Category</h2>
+      <div class="d-flex flex-wrap gap-2">
+        <% categories.forEach(category => { %>
+          <a href="/products?category=<%= category.slug %>" class="btn btn-outline-primary rounded-pill px-4">
+            <%= category.name %>
+          </a>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Products Slider -->
+  <div class="row mb-5">
+    <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+      <h2>Featured Products</h2>
+      <a href="/products" class="btn btn-sm btn-outline-primary">View All</a>
+    </div>
+    <div class="col-12">
+      <div class="featured-slider">
+        <% featuredProducts.forEach(product => { %>
+          <div class="px-2">
+            <div class="card h-100 border-0 shadow-sm">
+              <img src="<%= product.image %>" class="card-img-top product-image" alt="<%= product.name %>">
+              <div class="card-body">
+                <h5 class="card-title"><%= product.name %></h5>
+                <p class="card-text text-primary fw-bold">Rs. <%= product.price %></p>
+                <a href="/products/<%= product.id %>" class="btn btn-sm btn-outline-primary w-100">View Details</a>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Filter Section -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Filter Products</h3>
+            <form id="filterForm" action="/products/filter" method="GET">
+              <div class="row g-3">
+                <div class="col-md-3">
+                  <label class="form-label">Category</label>
+                  <select class="form-select" name="category">
+                    <option value="">All Categories</option>
+                    <% categories.forEach(category => { %>
+                      <option value="<%= category.name %>"><%= category.name %></option>
+                    <% }); %>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Price Range</label>
+                  <select class="form-select" name="price">
+                    <option value="">All Prices</option>
+                    <option value="0-1000">Under Rs. 1000</option>
+                    <option value="1000-5000">Rs. 1000 - 5000</option>
+                    <option value="5000-10000">Rs. 5000 - 10000</option>
+                    <option value="10000">Above Rs. 10000</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Sort By</label>
+                  <select class="form-select" name="sort">
+                    <option value="">Default</option>
+                    <option value="price_asc">Price: Low to High</option>
+                    <option value="price_desc">Price: High to Low</option>
+                    <option value="newest">Newest Arrivals</option>
+                    <option value="popular">Most Popular</option>
+                  </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Products Grid -->
+  <div class="row">
+    <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+      <h2>All Products</h2>
+      <div class="d-flex gap-2">
+        <button class="btn btn-sm btn-outline-secondary grid-view active" data-view="grid">
+          <i class="bi bi-grid-fill"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-secondary list-view" data-view="list">
+          <i class="bi bi-list-ul"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="col-12">
+      <div class="row products-container">
+        <% products.forEach(product => { %>
+          <div class="col-6 col-md-4 col-lg-2 mb-4 product-card">
+            <div class="card h-100 shadow-sm">
+              <div class="badge bg-danger position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+              <img src="<%= product.image %>" class="card-img-top product-image" alt="<%= product.name %>">
+              <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="text-muted"><%= product.category %></span>
+                  <div class="rating small text-warning">
+                    ★★★★☆
+                  </div>
+                </div>
+                <h5 class="card-title"><%= product.name %></h5>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-primary fw-bold">Rs. <%= product.price %></span>
+                    <% if(product.originalPrice) { %>
+                      <span class="text-decoration-line-through text-muted small ms-2">Rs. <%= product.originalPrice %></span>
+                    <% } %>
+                  </div>
+                  <button class="btn btn-sm btn-outline-primary">+ Cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+  // Initialize product sliders
+  $(document).ready(function(){
+    $('.featured-slider').slick({
+      dots: true,
+      infinite: true,
+      speed: 300,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 992,
+          settings: {
+            slidesToShow: 3
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 2
+          }
+        },
+        {
+          breakpoint: 576,
+          settings: {
+            slidesToShow: 1
+          }
+        }
+      ]
+    });
+    
+    // View toggle functionality
+    $('.grid-view, .list-view').click(function(){
+      const view = $(this).data('view');
+      $('.grid-view, .list-view').removeClass('active');
+      $(this).addClass('active');
+      $('.products-container').removeClass('list-view').addClass(view + '-view');
+    });
+  });
+
+  const filterForm = document.getElementById('filterForm');
+filterForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(filterForm);
+    const params = new URLSearchParams(formData);
+    
+    try {
+        const response = await fetch(`/products/filter?${params.toString()}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const products = await response.json();
+        
+        // Update the products display
+        updateProductsDisplay(products);
+    } catch (error) {
+        console.error('Error:', error);
+        // Show error message to user
+        alert('Failed to apply filters. Please try again.');
+    }
+});
+
+function updateProductsDisplay(products) {
+    const productsContainer = document.querySelector('.products-container');
+    
+    if (products.length === 0) {
+        productsContainer.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <h4>No products found matching your filters</h4>
+                <button class="btn btn-primary mt-3" onclick="resetFilters()">Reset Filters</button>
+            </div>
+        `;
+        return;
+    }
+    
+    let html = '';
+    products.forEach(product => {
+        html += `
+            <div class="col-6 col-md-4 col-lg-3 mb-4 product-card">
+                <div class="card h-100 shadow-sm">
+                    ${product.discount ? `<div class="badge bg-danger position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>` : ''}
+                    <img src="${product.image}" class="card-img-top product-image" alt="${product.name}">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">${product.category_name}</span>
+                            <div class="rating small text-warning">
+                                ★★★★☆
+                            </div>
+                        </div>
+                        <h5 class="card-title">${product.name}</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-primary fw-bold">Rs. ${product.price}</span>
+                                ${product.original_price ? `<span class="text-decoration-line-through text-muted small ms-2">Rs. ${product.original_price}</span>` : ''}
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary">+ Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    productsContainer.innerHTML = html;
+}
+
+function resetFilters() {
+    document.getElementById('filterForm').reset();
+    // You might want to reload the original products here
+    location.reload(); // Simple solution, or fetch original products again
+}
+</script>
+
 <%- include("../partials/_footer") %>

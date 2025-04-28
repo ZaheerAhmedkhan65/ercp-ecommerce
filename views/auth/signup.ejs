@@ -1,26 +1,43 @@
 <%- include("../partials/_header") %>
 
 <div class="container">
-    <div class="row">
-        <div class="col-12">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-8 my-5">
             <h1>Sign up</h1>
             <form action="/auth/signup" method="post">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name">
+                    <input type="text" class="form-control" id="name" name="name" required>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" name="email">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <div class="position-relative">
+                        <input type="password" class="form-control" id="password" name="password">
+                        <button id="show-Password-btn"><i class="bi bi-eye"></i></button>
+                    </div>
+                    <div id="message">
+                        <h3>Password must contain the following:</h3>
+                        <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                        <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                        <p id="number" class="invalid">A <b>number</b></p>
+                        <p id="length" class="invalid">Minimum <b>6 characters</b></p>
+                      </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Sign up</button>
+                <div class="d-flex align-items-center gap-2 mt-3">
+                    <p class="m-0">Already have an account ?</p>
+                    <a href="/auth/signin" class="text-decoration-none">Sign in</a>
+                </div>
             </form>
         </div>
     </div>
 </div>
+
+<script src="/js/password.js"></script>
+<script src="/js/validatePassword.js"></script>
 
 <%- include("../partials/_footer") %>

@@ -1,0 +1,127 @@
+/* sign up page password toggle and validation */
+
+#show-Password-btn {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+#message {
+  display: none;
+}
+
+#message h3 {
+  font-size: 14px;
+}
+
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -5px;
+  content: "✔️";
+}
+
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -5px;
+  content: "❌";
+}
+
+/* Product image Magnifier  */
+
+.img-magnifier-glass {
+  position: absolute;
+  border: 3px solid #000;
+  border-radius: 50%;
+  cursor: none;
+  width: 100px;
+  height: 100px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.img-magnifier-container {
+  position: relative;
+  cursor: none;
+}
+
+ /* Home Page*/
+ .product-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+.featured-slider .card {
+  transition: transform 0.3s;
+}
+
+.featured-slider .card:hover {
+  transform: translateY(-5px);
+}
+
+/* View Toggle Styles */
+.products-container.list-view {
+  display: block;
+}
+
+.products-container.list-view .product-card {
+  width: 100%;
+  max-width: 100%;
+  flex: 0 0 100%;
+}
+
+.products-container.list-view .card {
+  flex-direction: row;
+}
+
+.products-container.list-view .product-image {
+  width: 200px;
+  height: 200px;
+}
+
+
+ /* Custom carousel styling */
+ #heroCarousel {
+  max-height: 500px; /* Adjust this value to your preferred height */
+  overflow: hidden;
+}
+
+#heroCarousel .carousel-inner {
+  height: 100%;
+}
+
+#heroCarousel .carousel-item {
+  height: 100%;
+}
+
+#heroCarousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This ensures the image covers the area while maintaining aspect ratio */
+  object-position: center; /* Centers the image horizontally */
+}
+
+/* Optional: Adjust caption positioning */
+#heroCarousel .carousel-caption {
+  bottom: 20%;
+}
+
+@media (max-width: 768px) {
+  #heroCarousel {
+    max-height: 300px;
+  }
+}

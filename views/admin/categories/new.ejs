@@ -4,15 +4,47 @@
                         <div class="col-12 grid-margin">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Add New Category</h4>
-                                    <div class="template-demo">
-                                        <form action="/categories/create" method="POST" >
-                                            <div class="form-group">
-                                                <label for="name">Name</label>
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter category name">
-                                            </div>                                             
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <h4 class="card-title">Add New Category</h4>
+                                            <div class="template-demo">
+                                                <form action="/categories/create" method="POST" >
+                                                    <div class="form-group mb-3">
+                                                        <label for="name">Name</label>
+                                                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter category name">
+                                                    </div>                      
+                                                    <div class="text-end">
+                                                        <button type="submit" class="btn btn-primary">Create</button>
+                                                    </div>                       
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <h4 class="card-title">Categories</h4>
+                                            <div class="template-demo">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th> # </th>
+                                                            <th> Name </th>
+                                                            <th> Actions </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% categories.forEach((category, index) => { %>
+                                                            <tr>
+                                                                <td> <%= index + 1 %></td>
+                                                                <td> <%= category.name %></td>
+                                                                <td>
+                                                                    <a href="/categories/<%= category.id %>/edit" class="btn btn-primary">Edit</a>
+                                                                    <a href="/categories/<%= category.id %>/delete" class="btn btn-danger">Delete</a>
+                                                                </td>
+                                                            </tr>
+                                                        <% }) %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

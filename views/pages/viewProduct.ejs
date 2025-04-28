@@ -1,0 +1,29 @@
+<%- include("../partials/_header") %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1><%= product.name %></h1>
+            <div class="row">
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="img-magnifier-container">
+                                <img id="product-image" src="<%= product.image %>" alt="<%= product.name %>" class="card-img-top">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <p><strong>Price:</strong> <%= product.price %></p>
+                    <p><strong>Category:</strong> <%= product.category_name %></p>
+                    <p><strong>Description:</strong> <%= product.description %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/imageMagnifier.js"></script>
+        
+<%- include("../partials/_footer") %>

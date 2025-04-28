@@ -7,7 +7,8 @@ const authenticate = require("../middleware/authenticate");
 
 router.get("/new",authenticate,authAdmin,async (req,res)=>{
     try{
-        res.render("admin/categories/new",{title:"New Category",user:req.user});
+        const categories = await Category.getAllCategories();
+        res.render("admin/categories/new",{title:"New Category",user:req.user ,categories});
     } catch(err){
         console.log(err);
         res.status(500).json({ error: "Server error" });
@@ -30,7 +31,7 @@ router.post("/create",authenticate,authAdmin, async(req,res)=>{
         const {name} = req.body;
         console.log("name",name);
         await Category.createCategory(name);
-        res.redirect("/admin/dashboard");
+        res.redirect("/categories/new");
     } catch(err){
         console.log(err);
         res.status(500).json({ error: "Server error" });

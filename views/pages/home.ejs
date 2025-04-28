@@ -1,31 +1,36 @@
 <%- include("../partials/_header") %>
 
 <!-- Hero Carousel -->
-<div id="heroCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <% for(let i=0; i<featuredSlides.length; i++) { %>
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="<%= i %>" class="<%= i===0 ? 'active' : '' %>"></button>
-      <% } %>
-    </div>
-    <div class="carousel-inner rounded-3">
-      <% featuredSlides.forEach((slide, index) => { %>
-        <div class="carousel-item <%= index===0 ? 'active' : '' %>">
-          <img src="<%= slide.image %>" class="d-block w-100" alt="<%= slide.title %>">
-          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-4 rounded">
-            <h5><%= slide.name %></h5>
-            <p><%= slide.description %></p>
-            <a href="<%= slide.link %>" class="btn btn-primary">Shop Now</a>
-          </div>
+ <div class="row justify-content-center">
+    <div class="col-6">
+        <div id="heroCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <% for(let i=0; i<featuredSlides.length; i++) { %>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="<%= i %>" class="<%= i===0 ? 'active' : '' %>"></button>
+              <% } %>
+            </div>
+            <div class="carousel-inner rounded-3">
+              <% featuredSlides.forEach((slide, index) => { %>
+                <div class="carousel-item <%= index===0 ? 'active' : '' %>">
+                  <img src="<%= slide.image %>" class="d-block w-100" alt="<%= slide.title %>">
+                  <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-4 rounded">
+                    <h5><%= slide.name %></h5>
+                    <p><%= slide.description %></p>
+                    <a href="<%= slide.link %>" class="btn btn-primary">Shop Now</a>
+                  </div>
+                </div>
+              <% }); %>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
         </div>
-      <% }); %>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </button>
-</div>
+ </div>
+
 
 <div class="container">
   <!-- Category Filters -->

@@ -92,36 +92,3 @@
   width: 200px;
   height: 200px;
 }
-
-
- /* Custom carousel styling */
- #heroCarousel {
-  max-height: 500px; /* Adjust this value to your preferred height */
-  overflow: hidden;
-}
-
-#heroCarousel .carousel-inner {
-  height: 100%;
-}
-
-#heroCarousel .carousel-item {
-  height: 100%;
-}
-
-#heroCarousel img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* This ensures the image covers the area while maintaining aspect ratio */
-  object-position: center; /* Centers the image horizontally */
-}
-
-/* Optional: Adjust caption positioning */
-#heroCarousel .carousel-caption {
-  bottom: 20%;
-}
-
-@media (max-width: 768px) {
-  #heroCarousel {
-    max-height: 300px;
-  }
-}

@@ -20,8 +20,6 @@ class Cart {
         ]);
         return rows[0];
     }
-    
-
 
     static async deleteCartByUserId(user_id) {
         const [rows] = await db.query("DELETE FROM carts WHERE user_id = ?", [

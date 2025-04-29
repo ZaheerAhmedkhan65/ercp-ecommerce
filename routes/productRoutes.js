@@ -125,7 +125,7 @@ router.post("/create", upload.single('image'), authenticate, authAdmin, async (r
     try {
         console.log('Uploaded to Cloudinary:', req.file.path); // This is the Cloudinary URL
         const {name, description, price, category_id} = req.body;
-        await Product.createProduct(name, description, price, category_id, req.file.path, req.file.filename  );
+        await Product.createProduct(name, description, price, category_id, req.file.path, req.file.filename);
 
         res.redirect("/admin/dashboard/products");
     } catch(err) {

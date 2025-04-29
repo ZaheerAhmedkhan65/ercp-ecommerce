@@ -7,7 +7,6 @@ class Product {
             'INSERT INTO products (name, description, price, category_id, image, image_public_id ) VALUES (?, ?, ?, ?, ?, ?)',
             [name, description, price, category_id, image_path, image_public_id]
         );
-        // Return the inserted product's ID
         return result.insertId;  // This gives you the auto-incremented ID of the new product
     }    
 
@@ -46,7 +45,7 @@ class Product {
     // Update a product by ID
     static async updateProduct(id, name, description, price, category_id, image, image_public_id) {
         const [rows] = await db.query(
-            'UPDATE products SET name = ?, description = ?, price = ?, category_id = ?, image = ? image_public_id = ? WHERE id = ?',
+            'UPDATE products SET name = ?, description = ?, price = ?, category_id = ?, image = ?, image_public_id = ? WHERE id = ?',
             [name, description, price, category_id, image, image_public_id, id]
         );
         return rows;

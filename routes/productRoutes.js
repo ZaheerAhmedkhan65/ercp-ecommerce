@@ -6,6 +6,7 @@ const ProductImage = require("../models/ProductImage");
 const authAdmin = require("../middleware/authAdmin");
 const authenticate = require("../middleware/authenticate");
 const upload = require('../middleware/upload');
+const db = require("../config/db");
 
 
 router.get("/new",authenticate,authAdmin,async (req,res)=>{
@@ -75,16 +76,19 @@ router.post("/:id/update", upload.single('image'), authenticate, authAdmin, asyn
         const { name, description, price, category_id } = req.body;
         const id = req.params.id;
         let imagePath = null;
+        let filename = null;
 
         if (req.file) {
-            imagePath = '/uploads/' + req.file.filename;
+            imagePath = req.file.path;
+            filename = req.file.filename;
         } else {
             // If no new image uploaded, get the old image path from the database
             const product = await Product.getProductById(id);
             imagePath = product.image;
+            filename = product.image_public_id;
         }
 
-        await Product.updateProduct(id, name, description, price, category_id, imagePath);
+        await Product.updateProduct(id, name, description, price, category_id, imagePath, filename);
 
         res.redirect("/admin/dashboard/products"); // or wherever your products list is
     } catch (err) {
@@ -97,6 +101,15 @@ router.post("/:id/update", upload.single('image'), authenticate, authAdmin, asyn
 router.delete("/:id/delete", authenticate, authAdmin, async (req, res) => {
     try {
         const { id } = req.body;
+        const product = await Product.getProductById(id);
+        if (!product) {
+            return res.status(404).json({ error: "Product not found" });
+        }
+
+        // Delete images from Cloudinary
+        if (product.image_public_id) {
+            await cloudinary.uploader.destroy(product.image_public_id);
+        }
 
         await Product.deleteProduct(id);
 
@@ -110,8 +123,9 @@ router.delete("/:id/delete", authenticate, authAdmin, async (req, res) => {
 
 router.post("/create", upload.single('image'), authenticate, authAdmin, async (req, res) => {
     try {
+        console.log('Uploaded to Cloudinary:', req.file.path); // This is the Cloudinary URL
         const {name, description, price, category_id} = req.body;
-        await Product.createProduct(name, description, price, category_id, '/uploads/'+req.file.filename);
+        await Product.createProduct(name, description, price, category_id, req.file.path, req.file.filename  );
 
         res.redirect("/admin/dashboard/products");
     } catch(err) {
@@ -144,6 +158,7 @@ router.post("/:id/remove-from-slides", authenticate, authAdmin, async (req, res)
             DELETE FROM slides 
             WHERE image = (SELECT image FROM products WHERE id = ?)
         `, [req.params.id]);
+        console.log("ID : ",req.params.id);
         res.redirect("/admin/dashboard/products?success=Product removed from slides");
     } catch(err) {
         console.log(err);

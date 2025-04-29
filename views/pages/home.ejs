@@ -2,7 +2,7 @@
 
 <!-- Hero Carousel -->
  <div class="row justify-content-center">
-    <div class="col-6">
+    <div class="col-lg-6 p-5">
         <div id="heroCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
             <div class="carousel-indicators">
               <% for(let i=0; i<featuredSlides.length; i++) { %>
@@ -14,9 +14,9 @@
                 <div class="carousel-item <%= index===0 ? 'active' : '' %>">
                   <img src="<%= slide.image %>" class="d-block w-100" alt="<%= slide.title %>">
                   <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-4 rounded">
-                    <h5><%= slide.name %></h5>
+                    <h5><%= slide.title %></h5>
                     <p><%= slide.description %></p>
-                    <a href="<%= slide.link %>" class="btn btn-primary">Shop Now</a>
+                    <a href="<%= slide.link %>" class="btn btn-sm btn-primary ">Shop Now</a>
                   </div>
                 </div>
               <% }); %>
